@@ -15,7 +15,6 @@ n                =     1000
 k                =     100
 alpha_elnet      =     1
 m                =     30
-dfmax_           =     floor(p * 0.7)
 spikeCov         =     0 # spikedCov(=1), or ToeplitzCov(=0)
 
 if (spikeCov){
@@ -51,8 +50,6 @@ for (i in 1:n){
   y[i]=rbinom(1,1,py[i])
 }
 
-#fit            =    glmnet(X, y, family = "binomial", alpha = alpha_elnet,  intercept = FALSE, standardize = FALSE, dfmax = dfmax_)
-#lambdaS        =    exp(seq(log(min(fit$lambda)), log(max(fit$lambda)*0.9), length.out = m))
 lambdaS        =    exp(seq(log(0.1/n), log(10/n), length.out = m))
    
 

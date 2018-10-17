@@ -48,8 +48,6 @@ X              =    F %*% matrix(rnorm( n*ncol(F), mean = 0, sd = 1 ), nrow = nc
 X              =    t(X)
 e              =    rnorm(n, mean = 0, sd = o)
 y              =    X %*% beta.star + e
-#fit            =    glmnet(X, y, alpha = alpha_elnet,  intercept = FALSE, standardize = FALSE, dfmax = dfmax_)
-#lambdaS        =    exp(seq(log(min(fit$lambda)), log(max(fit$lambda)), length.out = m))
 lambdaS        =    exp(seq(log(1/n), log(100/n), length.out = m))
 
 ptm            =     proc.time()      

@@ -18,7 +18,6 @@ alpha_elnet      =     0.5
 m                =     30
 
 
-#dfmax_         =     floor(min(n,p) * 0.99)
 spikeCov       =     1
 
 if (spikeCov){
@@ -54,8 +53,6 @@ for (i in 1:n){
   y[i]=rpois(1,ez[i])
 }
 
-#fit            =    glmnet(X, y, family = "poisson", alpha = alpha_elnet,  intercept = FALSE, standardize = FALSE, dfmax = dfmax_)
-#lambdaS        =    exp(seq(log(min(fit$lambda)), log(max(fit$lambda)), length.out = m))
 lambdaS        =    exp(seq(log(1/n), log(100/n), length.out = m))
 
 ptm            =     proc.time()      
