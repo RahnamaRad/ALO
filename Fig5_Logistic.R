@@ -122,44 +122,10 @@ eror.plot      =     eror.plot  + theme(plot.title = element_text(hjust = 0.5, v
 #eror.plot      =     eror.plot  + ggtitle(TeX(sprintf("$n$=%s,$p$=%s,$t_{LO}$=%s,$t_{ALO}$=%0.3f,$t_{FIT}$=%.3f",n,p,time.lo,time.alo,time.fit))) 
 eror.plot      =     eror.plot  + ggtitle((sprintf("n=%s, p=%s \n\n LO:%0.2f(sec) \n ALO:%0.2f(sec) \n FIT:%.2f(sec)",n,p,time.lo,time.alo,time.fit))) 
 
-if (spikeCov){
-  if (alpha_elnet == 1) {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/logistic_lasso_spiked_n_%s_p_%s_k_%s.pdf", n,p,k))
-  } else {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/logistic_elnet_spiked_n_%s_p_%s_k_%s.pdf", n,p,k))
-  }
-} else {
-  if (alpha_elnet == 1) {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/logistic_lasso_toeplitz_n_%s_p_%s_k_%s.pdf", n,p,k))
-  } else {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/logistic_elnet_toeplitz_n_%s_p_%s_k_%s.pdf", n,p,k))
-  }
-}
 print(eror.plot)
-dev.off()
 }
 
 
-cat(sprintf("n = %s| p = %s \n", n, p))
-cat(sprintf("TIME: lo = %.2f| alo = %.2f| alo_raw = %.2f| fit =%.2f \n", time.lo, time.alo, time.alo_raw, time.fit))
-cat(sprintf("-------------------------------------- \n"))
 
-eror           =     data.frame(c(rep("LO", length(lo$lambda)),  rep("ALO", length(alo$lambda)),  rep("ALO(raw)", length(fit$lambda)) ), 
-                                n*c(lo$lambda, alo$lambda, fit$lambda) ,
-                                c(lo$cvm, alo$alom, alo_raw),
-                                c(lo$cvsd, rep(0, length(alo$lambda)), rep(0, length(fit$lambda))))
-colnames(eror) =     c("method", "lambda", "err", "se")
-eror.plot      =     ggplot(eror, aes(x=lambda, y = err, color=method)) +   geom_line(size=1) 
-eror.plot      =     eror.plot  + scale_x_log10()#(breaks = c(seq(0.1,2.4,0.2)))   
-eror.plot      =     eror.plot  + theme(legend.text = element_text(colour="black", size=16, face="bold", family = "Courier")) 
-eror.plot      =     eror.plot  + geom_pointrange(aes(ymin=err-se, ymax=err+se),  size=0.8,  shape=15)
-eror.plot      =     eror.plot  + theme(legend.title=element_blank()) 
-eror.plot      =     eror.plot  + scale_color_discrete(breaks=c("LO", "ALO", "ALO(raw)"))
-eror.plot      =     eror.plot  + theme(axis.title.x = element_text(size=24)) 
-#eror.plot      =     eror.plot  + theme(axis.title.y = element_text(size=16, face="bold", family = "Courier")) 
-eror.plot      =     eror.plot  + xlab( expression(paste( lambda))) + ylab("")
-eror.plot      =     eror.plot  + theme(plot.title = element_text(hjust = 0.5, vjust = -10, size=20, face="bold",  family = "Courier"))
-eror.plot      =     eror.plot  + ggtitle(TeX(sprintf("$n$=%s, $p$=%s$",n,p)) ) 
 
-print(eror.plot)
 

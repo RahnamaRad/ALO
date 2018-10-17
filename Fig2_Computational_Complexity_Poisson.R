@@ -97,33 +97,11 @@ for (i in 1:length(p_)){
   time.fit.se[i]    =  sd(time.fit.smp)/sqrt(MCMCsamples)
   time.lo.se[i]     =  sd(time.lo.smp)/sqrt(MCMCsamples)
   time.alo.se[i]    =  sd(time.alo.smp)/sqrt(MCMCsamples)
+  
   cat(sprintf("n = %s| p = %s \n", n, p))
   cat(sprintf("TIME: lo = %.2f ± %.2f| alo = %.2f± %.2f| fit =%.2f± %.2f \n", time.lo.mean[i], time.lo.se[i], time.alo.mean[i], time.alo.se[i], time.fit.mean[i], time.fit.se[i]))
   cat(sprintf("-------------------------------------- \n"))
-  eror           =     data.frame(c(rep("LO", length(lo$lambda)), rep("ALO", length(alo$lambda))),n*c(lo$lambda, alo$lambda),c(lo$cvm, alo$alom), c(lo$cvsd, rep(0, length(alo$lambda))))
-  colnames(eror) =     c("method", "lambda", "err", "se")
-  eror.plot      =     ggplot(eror, aes(x=lambda, y = err, color=method)) +   geom_line(size=0.5) 
-  eror.plot      =     eror.plot  + scale_x_log10()#(breaks = c(seq(0.1,2.4,0.2)))   
-  eror.plot      =     eror.plot  + theme(legend.text = element_text(colour="black", size=12, face="bold", family = "Courier")) 
-  eror.plot      =     eror.plot  + geom_pointrange(aes(ymin=err-se, ymax=err+se),  size=0.4,  shape=15)
-  eror.plot      =     eror.plot  + theme(legend.title=element_blank()) 
-  eror.plot      =     eror.plot  + scale_color_discrete(breaks=c("LO","ALO"))
-  eror.plot      =     eror.plot  + theme(axis.title.x = element_text(size=18)) 
-  eror.plot      =     eror.plot  + theme(axis.title.y = element_text(size=16, face="bold", family = "Courier")) 
-  eror.plot      =     eror.plot  + xlab( expression(paste( lambda))) + ylab("error")
-  eror.plot      =     eror.plot  + ggtitle(sprintf("n = %s,p = %s,k=%s", n,p,k))
-  eror.plot      =     eror.plot  + theme(plot.title = element_text(hjust = 0.5, vjust = -10,size=14, face="bold",  family = "Courier"))
-  print(eror.plot)
 }
-
-time.lo.mean   =     time.lo.mean*m
-time.alo.mean  =     time.alo.mean*m
-time.fit.mean  =     time.fit.mean*m
-
-time.lo.se   =     time.lo.se*m
-time.alo.se  =     time.alo.se*m
-time.fit.se  =     time.fit.se*m
-
 
 time           =     data.frame(c(rep("LO", length(p_)), rep("ALO", length(p_)), rep("FIT", length(p_)))
                                 , c(p_, p_, p_)
@@ -145,53 +123,7 @@ time.plot      =     time.plot  + theme(plot.title = element_text(hjust = 0.5, v
 time.plot      =     time.plot  + annotation_logticks() + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
                                                                         labels = trans_format("log10", math_format(10^.x)))
 time.plot      =     time.plot  +scale_x_log10(breaks = p_) 
-
 print(time.plot)
 
-
-if (delta < 1) {
-  if (alpha_elnet == 1) {
-    pdf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_lasso_p_greater_n.pdf")
-  } else {
-    pdf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_elnet_p_greater_n.pdf")
-  }
-} else {
-  if (delta > 1){
-    if (alpha_elnet == 1) {
-      pdf( "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_lasso_p_less_n.pdf")
-    } else {
-      pdf( "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_elnet_p_less_n.pdf")
-    }
-  } else {
-    if (alpha_elnet == 1) {
-      pdf( "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_lasso_p_equal_n.pdf")
-    } else {
-      pdf( "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_poisson_elnet_p_equal_n.pdf")
-    }
-  }
-}
-
-
-print(time.plot)
-dev.off()
-
-
-
-# time.data     =     data.frame(c(rep("LO", length(p_)), rep("ALO", length(p_)), rep("FIT", length(p_)))
-#                                , c(p_, p_, p_)
-#                                , c(time.lo.mean, time.alo.mean, time.fit.mean)
-#                                , c(time.lo.se, time.alo.se, time.fit.se)
-#                                ,  c(p_*delta, p_*delta, p_*delta)
-#                                ,  c(p_*delta*rho, p_*delta*rho, p_*delta*rho)
-# )
-# 
-# colnames(time.data) =     c("method", "p", "time", "se", "n", "k")
-# 
-# 
-# if (delta < 1) {
-#   write.table(time.data, "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_logistic_lasso_p_greater_n.txt", sep="\t")
-# } else {
-#   write.table(time.data, "/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/time_logistic_lasso_p_less_n.txt", sep="\t")
-# }
 
 

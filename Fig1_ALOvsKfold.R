@@ -42,6 +42,11 @@ for (i in 1:MCMCsamples){
   cv.lasso.lo     =     cv.glmnet(X, y, alpha = 1,  intercept = FALSE, standardize = FALSE, lambda = lambda, nfolds = n)
   lasso.fit       =     glmnet(X, y, alpha = 1,  intercept = FALSE, standardize = FALSE, lambda = lambda)
   
+  # note that the cv.glmnet doesn't necessarily calculate CV over the values of lambdas given to the function.
+  # to test this claim compare the set lambdas feeded to the cv.glmnet function and the lambdas of the object provided by cv.glmnet.
+  # this creates a problem because in each iteration we have the CV evaluate over a slightly different set of lambdas
+  # in order to fix this problem we use a very flexible smoothing spline to evaluate the CV over a fixed set of lambdas
+  # note that since the df=number of lambdas -1, the amount of smoothing is minimal and won't change our results in a meaningful manner
   cv.3f.sspline   =     smooth.spline(cv.lasso.3f$lambda, cv.lasso.3f$cvm, df = length(cv.lasso.3f$lambda)-1) 
   cv.3f.i         =     predict(cv.3f.sspline, lambda)
   cv.3f[ ,i]      =     cv.3f.i$y

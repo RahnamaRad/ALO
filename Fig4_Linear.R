@@ -93,20 +93,6 @@ eror.plot      =     eror.plot  + theme(plot.title = element_text(hjust = 0.5, v
 eror.plot      =     eror.plot  + ggtitle((sprintf("n=%s, p=%s \n\n LO:%0.2f(sec) \n ALO:%0.2f(sec) \n FIT:%.2f(sec)",n,p,time.lo,time.alo,time.fit))) 
 
 
-if (spikeCov){
-  if (alpha_elnet == 1) {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/gaussian_lasso_spiked_n_%s_p_%s_k_%s.pdf", n,p,k))
-  } else {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/gaussian_elnet_spiked_n_%s_p_%s_k_%s.pdf", n,p,k))
-  }
-} else {
-  if (alpha_elnet == 1) {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/gaussian_lasso_toeplitz_n_%s_p_%s_k_%s.pdf", n,p,k))
-  } else {
-    pdf(sprintf("/Users/krad/Dropbox/Fast LOOCV/ALO_JRSSB/figures/gaussian_elnet_toeplitz_n_%s_p_%s_k_%s.pdf", n,p,k))
-  }
-}
 print(eror.plot)
-dev.off()
 
 }
