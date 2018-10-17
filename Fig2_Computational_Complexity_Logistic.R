@@ -15,7 +15,7 @@ p_               =     seq(200, 1000, 200)
 delta            =     1
 rho              =     0.1
 alpha_elnet      =     1
-MCMCsamples      =     2
+MCMCsamples      =     10
 m                =     10
 
 time.lo.mean     =     rep(0, length(p_))

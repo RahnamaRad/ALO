@@ -8,7 +8,7 @@ library(alocv)
 library(rmutil)
 library(tictoc)
 library(latex2exp)
-set.seed(1)
+set.seed(0)
 p_values         =     c(200, 1000, 10000)
 for (p in p_values){
 n                =     1000
@@ -120,7 +120,7 @@ eror.plot      =     eror.plot  + theme(axis.title.x = element_text(size=24),
 eror.plot      =     eror.plot  + xlab( expression(paste( lambda))) + ylab("")
 eror.plot      =     eror.plot  + theme(plot.title = element_text(hjust = 0.5, vjust = -32, size=20, family = "Courier"))
 #eror.plot      =     eror.plot  + ggtitle(TeX(sprintf("$n$=%s,$p$=%s,$t_{LO}$=%s,$t_{ALO}$=%0.3f,$t_{FIT}$=%.3f",n,p,time.lo,time.alo,time.fit))) 
-eror.plot      =     eror.plot  + ggtitle((sprintf("n=%s, p=%s \n\n LO:%0.3f(sec) \n ALO:%0.3f(sec) \n FIT:%.3f(sec)",n,p,time.lo,time.alo,time.fit))) 
+eror.plot      =     eror.plot  + ggtitle((sprintf("n=%s, p=%s \n\n LO:%0.2f(sec) \n ALO:%0.2f(sec) \n FIT:%.2f(sec)",n,p,time.lo,time.alo,time.fit))) 
 
 if (spikeCov){
   if (alpha_elnet == 1) {
